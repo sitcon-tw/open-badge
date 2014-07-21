@@ -1,15 +1,14 @@
 package main
 
 import (
+  // 3rd-party library
   "github.com/go-martini/martini"
+  // Badge
+  "github.com/sitcon-tw/open-badge/app"
 )
-
-func handleHelloWorld() string {
-  return "SITCON Open Badges - Comming Soon...";
-}
 
 func main() {
   m := martini.Classic()
-  m.Get("/", handleHelloWorld)
+  app.SetupRouter(m)
   m.Run()
 }
