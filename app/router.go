@@ -11,5 +11,5 @@ func SetupRouter(m *martini.ClassicMartini) {
   // Open Badge API
   m.Get("/api/badge/:id", BadgeAPI)
   m.Get("/api/assertion/:id", AssertionAPI)
-  m.Get("/api/orgization", OrgizationAPI) // Just response SITCON
+  m.Get("/api/organization", OrganizationAPI) // Just response SITCON
 }

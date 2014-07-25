@@ -1,6 +1,6 @@
 package badge
 
-type Orgization struct {
+type Organization struct {
   Name string `json:"name"`
   Url string `json:"url"`
   Description string `json:"description,omitempty"`
