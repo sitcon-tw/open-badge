@@ -23,8 +23,8 @@ func AssertionAPI(res http.ResponseWriter, req *http.Request, params martini.Par
   res.Write([]byte(fmt.Sprintf("Request Assertion ID: %s", id)))
 }
 
-func OrgizationAPI(res http.ResponseWriter, req *http.Request, r render.Render) {
-  r.JSON(200, badge.Orgization{
+func OrganizationAPI(res http.ResponseWriter, req *http.Request, r render.Render) {
+  r.JSON(200, badge.Organization{
     Name: "SITCON",
     Url: "http://sitcon.org",
   })
