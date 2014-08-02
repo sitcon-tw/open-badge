@@ -46,6 +46,12 @@ gulp.task 'jshint', () ->
     .pipe($.jshint.reporter('jshint-stylish'))
     .pipe($.if(!browserSync.active, $.jshint.reporter('fail')))
 
+gulp.task 'coffee', ()->
+  return gulp.src(['app/scripts/**/*.coffee'])
+    .pipe($.coffee())
+    .on('error', console.error.bind(console))
+    .pipe(gulp.dest('.tmp/scripts'))
+
 # Optimize Images
 gulp.task 'images', () ->
   return gulp.src('app/images/**/*')
@@ -142,7 +148,7 @@ gulp.task 'serve', () ->
 
 # Build Production Files, the Default Task
 gulp.task 'default', ['clean'], (cb) ->
-  runSequence('styles', ['jshint', 'html', 'images', 'fonts', 'copy'], cb)
+  runSequence(['styles', 'coffee'], ['jshint', 'html', 'images', 'fonts', 'copy'], cb)
 
 # Run PageSpeed Insights
 # Update `url` below to the public URL for your site
