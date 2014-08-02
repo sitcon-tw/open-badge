@@ -17,6 +17,9 @@ func main() {
 			r.URL.Path = upath
 		}
 		upath = path.Clean(upath)
+		if upath == "/" {
+			upath = "/index.html"
+		}
 		if _, err := os.Stat("./.tmp" + upath); err == nil {
 			http.ServeFile(w, r, "./.tmp" + upath)
 		} else if _, err := os.Stat("./app" + upath); err == nil {
