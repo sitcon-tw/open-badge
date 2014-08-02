@@ -94,6 +94,7 @@ gulp.task 'styles:scss', () ->
       style: 'expanded',
       precision: 10,
       loadPath: ['app/styles']
+      compass: true
     }))
     .on('error', console.error.bind(console))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
