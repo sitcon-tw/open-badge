@@ -145,7 +145,7 @@ gulp.task 'serve', () ->
     notify: true
   })
 
-  gulp.watch(['app/**/*.html'], reload)
+  gulp.watch(['app/*.html', 'app/**/*.html'], reload)
   gulp.watch(['app/styles/**/*.scss'], ['styles:scss'])
   gulp.watch(['app/styles/**/*.css', '.tmp/styles/**/*.css'], ['styles:css', reload])
   gulp.watch(['app/scripts/**/*.js', '.tmp/scripts/**/*.js'], ['jshint'])
