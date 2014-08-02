@@ -1,0 +1,25 @@
+{
+  "name": "SITCON-Open-Badge",
+  "version": "0.1.0",
+  "homepage": "https://github.com/sitcon-tw/open-badge",
+  "authors": [
+    "蒼時弦也 <elct9620@frost.tw>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "overrides": {
+    "modernizr": {
+      "main": " modernizr.js"
+    }
+  },
+  "dependencies": {
+    "modernizr": "~2.8.3"
+  }
+}

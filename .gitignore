@@ -25,5 +25,6 @@ _testmain.go
 .tmp
 node_modules
 .sass-cache
+bower_components
 # Skip public directory (Production only)
 public

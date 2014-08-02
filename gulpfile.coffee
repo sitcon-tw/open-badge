@@ -25,6 +25,7 @@ runSequence = require('run-sequence')
 browserSync = require('browser-sync')
 pagespeed = require('psi')
 reload = browserSync.reload
+mainBowerFiles = require('main-bower-files')
 
 AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
@@ -40,7 +41,7 @@ AUTOPREFIXER_BROWSERS = [
 
 # Lint JavaScript
 gulp.task 'jshint', () ->
-  return gulp.src(['app/scripts/**/*.js', '.tmp/scripts/**/*.js'])
+  return gulp.src(['app/scripts/**/*.js', '.tmp/scripts/**/*.js', '!.tmp/scripts/**/*.js'])
     .pipe(reload(stream: true, once: true))
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
@@ -51,6 +52,10 @@ gulp.task 'coffee', ()->
     .pipe($.coffee())
     .on('error', console.error.bind(console))
     .pipe(gulp.dest('.tmp/scripts'))
+
+gulp.task 'bower', ()->
+  return gulp.src(mainBowerFiles())
+    .pipe(gulp.dest('.tmp/scripts/lib'))
 
 # Optimize Images
 gulp.task 'images', () ->
@@ -144,11 +149,12 @@ gulp.task 'serve', () ->
   gulp.watch(['app/styles/**/*.scss'], ['styles:scss'])
   gulp.watch(['app/styles/**/*.css', '.tmp/styles/**/*.css'], ['styles:css', reload])
   gulp.watch(['app/scripts/**/*.js', '.tmp/scripts/**/*.js'], ['jshint'])
+  gulp.watch(['bower.json'], ['bower'])
   gulp.watch(['app/images/**/*'], reload)
 
 # Build Production Files, the Default Task
 gulp.task 'default', ['clean'], (cb) ->
-  runSequence(['styles', 'coffee'], ['jshint', 'html', 'images', 'fonts', 'copy'], cb)
+  runSequence(['styles', 'coffee', 'bower'], ['jshint', 'html', 'images', 'fonts', 'copy'], cb)
 
 # Run PageSpeed Insights
 # Update `url` below to the public URL for your site
