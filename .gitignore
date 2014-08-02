@@ -21,3 +21,6 @@ _testmain.go
 
 *.exe
 *.test
+
+.tmp
+node_modules
