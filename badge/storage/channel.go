@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"sync"
+	"github.com/syndtr/goleveldb/leveldb/opt"
 )
 
 type rPack struct {
@@ -28,24 +28,24 @@ var (
 
 func dbReadkey() {
 	select {
-	case p <- badgeRChan :
+	case p := <- badgeRChan :
 	    data, err := DB["badge"].Get(p.key, nil)
 	    if err != nil {
-	        p.ch.Close()
+	        close(p.ch)
 	    } else {
 	        p.ch <- data
 	    }
-	case p <- assertionRChan :
+	case p := <- assertionRChan :
 	    data, err := DB["assertion"].Get(p.key, nil)
 	    if err != nil {
-	        p.ch.Close()
+	        close(p.ch)
 	    } else {
 	        p.ch <- data
 	    }
-	case p <- issuerRChan :
+	case p := <- issuerRChan :
 	    data, err := DB["issuer"].Get(p.key, nil)
 	    if err != nil {
-	        p.ch.Close()
+	        close(p.ch)
 	    } else {
 	        p.ch <- data
 	    }
@@ -54,11 +54,11 @@ func dbReadkey() {
 
 func dbWrite() {
 	select {
-	case p <- badgeWChan :
-	    ch <- DB["badge"].Put(p.key, p.data, &opt.WriteOptions{})
-	case p <- assertionWChan :
-	    ch <- DB["assertion"].Put(p.key, p.data, &opt.WriteOptions{})
-	case p <- issuerWChan :
-	    ch <- DB["issuer"].Put(p.key, p.data, &opt.WriteOptions{})
+	case p := <- badgeWChan :
+	    p.ch <- DB["badge"].Put(p.key, p.data, &opt.WriteOptions{})
+	case p := <- assertionWChan :
+	    p.ch <- DB["assertion"].Put(p.key, p.data, &opt.WriteOptions{})
+	case p := <- issuerWChan :
+	    p.ch <- DB["issuer"].Put(p.key, p.data, &opt.WriteOptions{})
 	}
 }

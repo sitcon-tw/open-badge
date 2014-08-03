@@ -1,11 +1,7 @@
 package badge
 
-import (
-	"strconv"
-)
-
 type Issuer struct {
-	id int
+	id string
 	slug string
 	Name string `json:"name"`
 	Url string `json:"url"`
@@ -15,22 +11,20 @@ type Issuer struct {
 	RevocationList string `json:"revocationList,omitempty"`
 }
 
-const (
-	DefultIssuer Issuer{ 
-		id: 0,
-		slug: "default",
-		Name: "SITCON",
-		Url: "http://sitcon.org",
-		Description: "",
-		Image: "http://sitcon.org/logo/sitcon.png",
-		Email: "contact@sitcon.org",
-		RevocationList: "",
-	},
-)
+var DefultIssuer = Issuer{ 
+	id: "0",
+	slug: "default",
+	Name: "SITCON",
+	Url: "http://sitcon.org",
+	Description: "",
+	Image: "http://sitcon.org/logo/sitcon.png",
+	Email: "contact@sitcon.org",
+	RevocationList: "",
+}
 
 func (i Issuer) Endpoint() string {
 	if i.slug != "" {
 		return "/issuer/" + i.slug
 	}
-	return "/issuer/" + strconv.Itoa(i.id)
+	return "/issuer/" + i.id
 }

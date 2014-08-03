@@ -1,7 +1,7 @@
 package storage
 
-func Read(t string, key []byte, , ch chan<- []byte) {
-	var p rPack{
+func Read(t string, key []byte, ch chan<- []byte) {
+	p := rPack{
 		key: key,
 		ch: ch,
 	}
@@ -16,7 +16,7 @@ func Read(t string, key []byte, , ch chan<- []byte) {
 }
 
 func Write(t string, key []byte, data []byte, ch chan<- error) {
-	var p wPack{
+	p := wPack{
 		key: key,
 		data: data,
 		ch: ch,

@@ -3,6 +3,7 @@ package storage
 import (
 	"os"
 	"log"
+	"github.com/syndtr/goleveldb/leveldb"
 )
 
 var DB map[string]*leveldb.DB
@@ -42,9 +43,18 @@ func loadDB() {
 	}
 }
 
-func init() {
+func Init() {
 	mkdir()
 	loadDB()
 	go dbReadkey()
 	go dbWrite()
+}
+
+func Close() {
+	for k := range(DB) {
+		DB[k].Close()
+	}
+	for k := range(Index) {
+		Index[k].Close()
+	}
 }
