@@ -1,5 +1,9 @@
 package badge
 
+import (
+	"strconv"
+)
+
 type Issuer struct {
 	id int
 	slug string
@@ -13,12 +17,20 @@ type Issuer struct {
 
 const (
 	DefultIssuer Issuer{ 
+		id: 0,
+		slug: "default",
 		Name: "SITCON",
 		Url: "http://sitcon.org",
 		Description: "",
-		Image: "",
+		Image: "http://sitcon.org/logo/sitcon.png",
 		Email: "contact@sitcon.org",
 		RevocationList: "",
 	},
-	DefultIssuerEndpoint = "/issuer/default",
 )
+
+func (i Issuer) Endpoint() string {
+	if i.slug != "" {
+		return "/issuer/" + i.slug
+	}
+	return "/issuer/" + strconv.Itoa(i.id)
+}

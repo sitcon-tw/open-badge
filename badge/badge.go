@@ -11,6 +11,8 @@ type Badge struct {
 	Image string `json:"image"`
 	Criteria string `json:"criteria"`
 	Issuer string `json:"issuer"`
+
+	// Not support yet.
 	Alignment Alignments `json:"alignment,omitempty"`
 	Tags []string `json:"tags,omitempty"`
 }
@@ -27,7 +29,7 @@ func New(args map[string]string) (*Badge, error) {
 		Description: args["description"],
 		Image: args["image"],
 		Criteria: args["criteria"],
-		Issuer: DefultIssuerEndpoint(),
+		Issuer: DefultIssuer.Endpoint(),
 	}
 	return badge, nil
 }
