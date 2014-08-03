@@ -3,9 +3,22 @@
 // Settings
 @import "settings";
 
+// Grid
+@import "grid";
+
+// Vendor
+@import "vendor/replace-text-with-svg";
+
 // Partials
+@import "partials/header";
+@import "partials/main";
+@import "partials/footer";
 
 // Modules
+@import "modules/button";
+@import "modules/colors";
+@import "modules/shape";
+
 
 /**
  * Base Style
@@ -19,5 +32,11 @@ body, html {
 @include establish-baseline;
 
 body {
+  font-family: "Lantinghei TC", "Apple LiGothic", sans-serif;
+  background: image-url('bg.png');
+}
 
+a {
+  text-decoration: none;
+  color: darken($green, 20%);
 }

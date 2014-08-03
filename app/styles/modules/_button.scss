@@ -1,0 +1,17 @@
+//
+// Button
+//
+
+.button {
+  display: inline-block;
+
+  padding: 1em;
+  @include rhythm(0.25, 0.5, 0.5, 0.25);
+
+  border: none;
+
+  color: white;
+  background: gray;
+
+  @include transition(500ms ease-out);
+}

@@ -1,0 +1,30 @@
+//
+// Main Partials
+//
+
+#main {
+  @include container;
+
+  text-align: center;
+
+}
+
+#register {
+  h2 {
+    font-family: normal;
+  }
+}
+
+#logo {
+  display: inline-block;
+  @include replace-text-with-svg('logo');
+  width: 21em;
+  height: 21em;
+
+  @include translateY(0em);
+  @include transition(500ms);
+
+  &:hover {
+    @include translateY(-1em);
+  }
+}

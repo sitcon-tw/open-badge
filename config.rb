@@ -1,6 +1,8 @@
 require 'compass/import-once/activate'
 require 'compass-normalize'
 require 'susy'
+require 'breakpoint'
+
 # Require any additional compass plugins here.
 
 # Set this to the root of your project when deployed:

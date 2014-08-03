@@ -1,0 +1,10 @@
+//
+// Replace text with SVG
+//
+// From: https://gist.github.com/evenwu/5443184
+//
+
+@mixin replace-text-with-svg($svg-name, $png-name: $svg-name) {
+  @include replace-text-with-dimensions($png-name + ".png");
+  background-image: none, image-url($svg-name + ".svg");
+}

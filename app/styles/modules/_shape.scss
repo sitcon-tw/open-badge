@@ -1,0 +1,15 @@
+//
+// Shape
+//
+
+.small-radius {
+  @include border-radius(3px);
+}
+
+.radius, .middle-radius {
+  @include border-radius(5px);
+}
+
+.large-radius {
+  @include border-radius(8px);
+}

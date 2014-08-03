@@ -1,0 +1,15 @@
+//
+// Footer
+//
+
+#footer {
+  text-align: center;
+  font-weight: bold;
+
+  @include adjust-font-size-to(14px);
+  @include susy-breakpoint(64em, 12) {
+    @include container(64em);
+  }
+
+  @include rhythm(1, 0.5, 0.5, 1);
+}
