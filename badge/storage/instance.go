@@ -1,9 +1,10 @@
 package storage
 
-func Read(t string, key []byte, ch chan<- []byte) {
+func ReadKey(t string, key []byte, chdata chan<- []byte, cherr chan<- error) {
 	p := rPack{
 		key: key,
-		ch: ch,
+		chdata: chdata,
+		cherr: cherr,
 	}
 	switch t {
 	case "badge":

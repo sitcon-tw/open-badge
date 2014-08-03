@@ -1,4 +1,4 @@
-package server
+package badge
 
 import (
 	"net/http"

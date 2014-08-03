@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"time"
 	"errors"
+	"net/url"
 	"crypto/sha1"
 	"crypto/rand"
 	"encoding/json"
@@ -31,20 +32,20 @@ func generateBadgeId() string {
 	return strconv.Itoa(int(time.Now().Unix())) + string(sha1.New().Sum(b))
 }
 
-func New(args map[string]string) (*Badge, error) {
+func New(args url.Values, issuer string) (*Badge, error) {
 	for _, varName := range([]string{"slug", "name", "description", "image", "criteria"}) {
-		if v, ok := args[varName]; !ok || v == "" {
+		if v := args.Get(varName); v == "" {
 			return nil, errors.New("Omit badge " + varName + ".")
 		}
 	}
 	badge := Badge{
 		id: generateBadgeId(),
-		slug: args["slug"],
-		Name: args["name"],
-		Description: args["description"],
-		Image: args["image"],
-		Criteria: args["criteria"],
-		Issuer: DefultIssuer.Endpoint(),
+		slug: args.Get("slug"),
+		Name: args.Get("name"),
+		Description: args.Get("description"),
+		Image: args.Get("image"),
+		Criteria: args.Get("criteria"),
+		Issuer: issuer,
 	}
 	ch := make(chan error)
 	data, err := msgpack.Marshal(badge)
@@ -58,18 +59,34 @@ func New(args map[string]string) (*Badge, error) {
 	return &badge, nil
 }
 
-func (b *Badge) Update(args map[string]string) (error) {
-	if v, ok := args["name"]; ok && v != "" {
-		b.Name = args["name"]
+func Get(id string) (*Badge, error) {
+	chdata := make(chan []byte)
+	cherr := make(chan error)
+	storage.ReadKey("badge", []byte(id), chdata, cherr)
+	var badge Badge
+	select {
+	case data := <- chdata:
+		if err := msgpack.Unmarshal(data, &badge); err != nil {
+            return nil, err
+        }
+	case err := <- cherr:
+		return nil, err
 	}
-	if v, ok := args["description"]; ok && v != "" {
-		b.Description = args["description"]
+	return &badge, nil
+}
+
+func (b *Badge) Update(args url.Values) (error) {
+	if v := args.Get("name"); v != "" {
+		b.Name = args.Get("name")
 	}
-	if v, ok := args["image"]; ok && v != "" {
-		b.Image = args["image"]
+	if v := args.Get("description"); v != "" {
+		b.Description = args.Get("description")
 	}
-	if v, ok := args["criteria"]; ok && v != "" {
-		b.Criteria = args["criteria"]
+	if v := args.Get("image"); v != "" {
+		b.Image = args.Get("image")
+	}
+	if v := args.Get("criteria"); v != "" {
+		b.Criteria = args.Get("criteria")
 	}
 
 	ch := make(chan error)

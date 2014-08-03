@@ -1,4 +1,4 @@
-package server
+package badge
 
 import (
 	"os"
@@ -23,6 +23,7 @@ var (
 	log service.Logger
 	serviceFlag chan bool
 	apiListener net.Listener
+	ServerHost string = "http://127.0.0.1:8010/api"
 )
 
 func (h *handler)ServeHTTP(w http.ResponseWriter, r *http.Request){
@@ -63,7 +64,6 @@ func startService() {
 
 func notFound(w http.ResponseWriter, req *http.Request) {
 	http.NotFound(w, req)
-	return
 }
 
 func stopService() {
@@ -71,7 +71,7 @@ func stopService() {
 	<- serviceFlag
 }
 
-func Run() {
+func serverRun() {
 	cpu_num := runtime.NumCPU()
 	fmt.Println("Cpu num: ", cpu_num)
 	runtime.GOMAXPROCS(cpu_num)

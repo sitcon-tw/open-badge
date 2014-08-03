@@ -25,6 +25,8 @@ func mkdir() {
 }
 
 func loadDB() {
+	DB = make(map[string]*leveldb.DB)
+	Index = make(map[string]*leveldb.DB)
 	for _, v := range([]string{"badge", "assertion", "issuer"}) {
 		if db, err := leveldb.OpenFile("./storage/" + v + ".ldb", nil); err == nil {
 			DB[v] = db

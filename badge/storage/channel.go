@@ -6,7 +6,8 @@ import (
 
 type rPack struct {
 	key []byte
-	ch chan<- []byte
+	chdata chan<- []byte
+	cherr chan<- error
 }
 
 type wPack struct {
@@ -31,23 +32,23 @@ func dbReadkey() {
 	case p := <- badgeRChan :
 	    data, err := DB["badge"].Get(p.key, nil)
 	    if err != nil {
-	        close(p.ch)
+	        p.cherr <- err
 	    } else {
-	        p.ch <- data
+	        p.chdata <- data
 	    }
 	case p := <- assertionRChan :
 	    data, err := DB["assertion"].Get(p.key, nil)
 	    if err != nil {
-	        close(p.ch)
+	        p.cherr <- err
 	    } else {
-	        p.ch <- data
+	        p.chdata <- data
 	    }
 	case p := <- issuerRChan :
 	    data, err := DB["issuer"].Get(p.key, nil)
 	    if err != nil {
-	        close(p.ch)
+	        p.cherr <- err
 	    } else {
-	        p.ch <- data
+	        p.chdata <- data
 	    }
 	}
 }
