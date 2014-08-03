@@ -149,6 +149,7 @@ gulp.task 'serve', () ->
   gulp.watch(['app/*.html', 'app/**/*.html'], reload)
   gulp.watch(['app/styles/**/*.scss'], ['styles:scss'])
   gulp.watch(['app/styles/**/*.css', '.tmp/styles/**/*.css'], ['styles:css', reload])
+  gulp.watch(['app/scripts/**/*.coffee'], ['coffee'])
   gulp.watch(['app/scripts/**/*.js', '.tmp/scripts/**/*.js'], ['jshint'])
   gulp.watch(['bower.json'], ['bower'])
   gulp.watch(['app/images/**/*'], reload)
